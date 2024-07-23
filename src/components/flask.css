@@ -1,0 +1,44 @@
+@keyframes fillLiquid {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+@keyframes fillGas {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fillSolid {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+.flask {
+  width: 100px;
+  height: 200px;
+  position: relative;
+}
+
+.reactant.liquid {
+  animation: fillLiquid 2s forwards;
+}
+
+.reactant.gas {
+  animation: fillGas 2s forwards;
+}
+
+.reactant.solid {
+  animation: fillSolid 2s forwards;
+}

@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.MuiAppBar-root {
+  z-index: 1300
+}
+
+@media (max-width: 768px) {
+  .MuiContainer-root {
+    margin-left: 0 !important;
+  }
+}
+body, html {
+  margin: 0;
+  padding: 20px;
+  /* width: 100vw;
+  height: 100vh; */
+  /* overflow: hidden */
+}
+/* 
+.container {
+  width: 90vw;
+  height: 90vh;
+  background-color: red;
+  transition: transform 1s ease, width 1s ease, height 1s ease;
+  overflow: auto; 
+}
+
+@media (max-width: 768px) { 
+  body, html {
+      overflow: auto; 
+      
+  }
+  .container {
+      transform: rotate(90deg);
+      width: 100vh; 
+      height: 100vw; 
+      transform-origin: center; 
+      position: absolute; 
+      top: 50%; 
+      left: 50%; 
+      transform: translate(-50%, -50%) rotate(90deg); 
+      background-color: blue;
+  }
+} */
+
+
+@keyframes fillLiquid {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+@keyframes fillGas {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fillSolid {
+  0% {
+    height: 0;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+.flask {
+  width: 100px;
+  height: 200px;
+  position: relative;
+}
+
+.reactant.liquid {
+  animation: fillLiquid 2s forwards;
+}
+
+.reactant.gas {
+  animation: fillGas 2s forwards;
+}
+
+.reactant.solid {
+  animation: fillSolid 2s forwards;
+}
+

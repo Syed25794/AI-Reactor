@@ -1,0 +1,81 @@
+import { forwardRef, useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import List from '@mui/material/List';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+import { v4 as uuid } from 'uuid';
+import { Link } from 'react-router-dom';
+import ChemicalReaction from './ChemicalReaction';
+
+const Transition = forwardRef(function Transition( props,ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function ReactantsDialog({ openReactantDialog, setOpenReactantDialog, producedReactants, Id }) {
+  const light = producedReactants[0].environmentFactors.light;
+  const [idsAdded, setIdsAdded] = useState(false);
+
+  useEffect(()=>{
+    (function (){
+      producedReactants.map(producedReactant=> {
+        producedReactant.reactants.forEach((reactant)=>{
+          reactant.id = uuid();
+        })
+        producedReactant.products.forEach((product)=>{
+          product.id = uuid();
+        })
+        return producedReactant;
+      })
+      setIdsAdded(true);
+    })()
+    return (()=>{
+      setIdsAdded(false);
+    })
+  },[producedReactants])
+  const handleClose = () => {
+    setOpenReactantDialog(false);
+  };
+
+  return (
+    <>
+      <Dialog
+        fullScreen
+        open={openReactantDialog}
+        onClose={handleClose}
+        TransitionComponent={Transition}
+        sx={{height:"90%", width: '95%',alignSelf: 'center',margin:'2.5%'}}
+      >
+        <AppBar sx={{ position: 'relative' }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              All Possibles Reactants
+            </Typography>
+            <Button autoFocus color="inherit" onClick={handleClose}>
+              <Link to='/'>
+                Save Reactant
+              </Link>
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <List>
+          {producedReactants.map((producedReactant,index)=> (
+            <ChemicalReaction producedReactant={producedReactant} isEditable={true} idsAdded={idsAdded} key={index} />
+          ))}
+        </List>
+      </Dialog>
+    </>
+  );
+}
