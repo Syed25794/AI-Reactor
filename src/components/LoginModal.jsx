@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const LoginModal = ({ open, setOpen, children, isSignUp }) => {
+export const LoginModal = ({ open, setOpen, children, isSignUp, isForgotPassword }) => {
   const languageStore = useSelector((state) => state.language);
   const { translations } = languageStore;
   const [fiveSeconds, setFiveSeconds] = React.useState(false);
@@ -33,7 +33,7 @@ export const LoginModal = ({ open, setOpen, children, isSignUp }) => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{isSignUp ? translations.signupPrompt : translations.loginPrompt}</DialogTitle>
+        <DialogTitle>{isSignUp ? translations.signupPrompt : isForgotPassword ? translations.forgotPasswordPrompt : translations.loginPrompt}</DialogTitle>
         <DialogContent>
           <DialogContentText component='div' id="alert-dialog-slide-description">
            {children}

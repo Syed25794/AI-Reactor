@@ -50,6 +50,7 @@ const ChemicalReactionPage = ({ loginModalOpen, setLoginModalOpen, reaction }) =
   const [selectedReactantId, setSelectedReactantId] = useState('');
   const [mainProduct, setMainProduct] = useState([]);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
 
   const reactants = useSelector(state=> state.reactions.reactants);
   const { isAuthenticated, user } = useSelector(state => state.auth);
@@ -62,6 +63,12 @@ const ChemicalReactionPage = ({ loginModalOpen, setLoginModalOpen, reaction }) =
       setMainProduct(reaction)
     }
   },[reaction])
+
+  useEffect(()=>{
+    if( !user ){
+      setMainProduct([]);
+    }
+  },[user])
   
   const addReactantInput = () => {
     if (reactants.length <= constants.maxReactants ) {
@@ -130,8 +137,8 @@ const ChemicalReactionPage = ({ loginModalOpen, setLoginModalOpen, reaction }) =
 
   return (
     <Box>
-      {!isAuthenticated && <LoginModal open={loginModalOpen} isSignUp={isSignUp} setOpen={setLoginModalOpen}>
-        { isSignUp ?  <SignUp setOpen={setOpen} switchToSignIn={switchToSignIn} /> : <SignIn setOpen={setOpen} switchToSignUp={switchToSignUp} />}
+      {!isAuthenticated && <LoginModal isForgotPassword={isForgotPassword} open={loginModalOpen} isSignUp={isSignUp} setOpen={setLoginModalOpen}>
+        { isSignUp ?  <SignUp switchToSignIn={switchToSignIn} /> : <SignIn isForgotPassword={isForgotPassword} setIsForgotPassword={setIsForgotPassword} switchToSignUp={switchToSignUp} />}
       </LoginModal>}
 
 

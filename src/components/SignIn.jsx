@@ -7,10 +7,9 @@ import { emailRegex } from '../constant/constants';
 const initialUserAuthDetails = { email: '', password: '' };
 const initialInputValidationsDetails = { emailValid : false, emailExist : false, password : false };
 
-const SignIn = ({ switchToSignUp }) => {
+const SignIn = ({ switchToSignUp, setIsForgotPassword, isForgotPassword }) => {
   const [userAuthDetails, setUserAuthDetails] = useState(initialUserAuthDetails);
   const [inputValidation, setInputValidation] = useState(initialInputValidationsDetails);
-  const [forgotPasswordState, setForgotPasswordState] = useState(false);
 
   const dispatch = useDispatch();
   const languageStore = useSelector((state) => state.language);
@@ -56,14 +55,14 @@ const SignIn = ({ switchToSignUp }) => {
       dispatch(forgotPassword(userAuthDetails.email,language));
       setTimeout(()=>{
         setUserAuthDetails(initialUserAuthDetails);
-        setForgotPasswordState(false);
+        setIsForgotPassword(false);
       },2000)
     }
   }
 
   return (
     <Container component="main" maxWidth="xs">
-      { forgotPasswordState ? 
+      { isForgotPassword ? 
         <Box>
           <TextField margin="normal" aria-describedby='component-error-text' error={inputValidation.emailExist || inputValidation.emailValid} required fullWidth onChange={handleChange} value={userAuthDetails.email} id="email" label={translations.email} name="email" autoComplete="email" autoFocus />
           {inputValidation.emailValid && <FormHelperText id="component-error-text" error>Invalid Email Address!</FormHelperText>}
@@ -85,7 +84,7 @@ const SignIn = ({ switchToSignUp }) => {
             <Button type="submit" fullWidth onClick={(e)=>handleSignIn(e)} variant="contained" sx={{ mt: 3, mb: 2, backgroundColor: '#ff7e5f', boxShadow: '4px 4px #323232' }}>
               {translations.loginButton}
             </Button>
-            <Button fullWidth variant="outlined" onClick={()=> setForgotPasswordState(true)} sx={{ mt: 2, borderColor: '#323232', color: '#323232', boxShadow: '4px 4px #323232' }}>
+            <Button fullWidth variant="outlined" onClick={()=> setIsForgotPassword(true)} sx={{ mt: 2, borderColor: '#323232', color: '#323232', boxShadow: '4px 4px #323232' }}>
               {translations.forgotPassword}
             </Button>
             <Button fullWidth variant="outlined" onClick={switchToSignUp} sx={{ mt: 2, borderColor: '#323232', color: '#323232', boxShadow: '4px 4px #323232' }}>

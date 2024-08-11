@@ -7,7 +7,7 @@ import { emailRegex } from '../constant/constants';
 const initialUserDetails = { email: '', password: '' };
 const initialInputValidationsDetails = { emailValid : false, emailExist : false, password : false,passwordLength : false };
 
-const SignUp = ({ switchToSignIn, setOpen }) => {
+const SignUp = ({ switchToSignIn }) => {
   const [userDetails, setUserDetails] = useState(initialUserDetails);
   const [inputValidation, setInputValidation] = useState(initialInputValidationsDetails);
   const dispatch = useDispatch();
