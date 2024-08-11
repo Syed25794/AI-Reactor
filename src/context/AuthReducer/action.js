@@ -1,7 +1,9 @@
-// src/context/AuthReducer/action.js
-import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { firebaseAuth } from "../../firebase/firebase";
 import { SIGNIN, LOGOUT } from "./actionTypes";
+import { setError, setLoadingFalse, setLoadingTrue, setSuccess } from "../LoadingReducer/action";
+import { errorMessageGenerator, successMessageGenerator } from "../../constant/constants";
+import { resetAll } from "../ReactionReducer/action";
 
 // Action creators
 export const signInSuccess = (user) => ({
@@ -14,40 +16,55 @@ export const logOutSuccess = () => ({
 });
 
 // Thunk action creators
-export const signIn = (email, password) => async (dispatch) => {
+export const signIn = (email, password, language) => async (dispatch) => {
   try {
+    dispatch(setLoadingTrue());
     const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password);
     const user = userCredential.user;
     dispatch(signInSuccess(user));
-    console.log('User signed in:', user);
+    dispatch(setLoadingFalse());
+    dispatch(setSuccess(successMessageGenerator('login',language)))
   } catch (error) {
-    console.error('Error signing in:', error);
-    // Handle error accordingly, e.g., dispatch an error action
+    dispatch(setLoadingFalse());
+    dispatch(setError(errorMessageGenerator(error.code,language)))
   }
 };
 
-export const signUp = (email, password, name) => async (dispatch) => {
+export const signUp = (email, password, language) => async (dispatch) => {
   try {
+    dispatch(setLoadingTrue());
     const userCredential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
     const user = userCredential.user;
-    await updateProfile(user, { displayName: name });
-    dispatch(signInSuccess(user)); // Sign in the user after sign-up
-    console.log('User signed up:', user);
+    dispatch(signInSuccess(user));
+    dispatch(setSuccess(successMessageGenerator('signup',language)))
+    dispatch(setLoadingFalse());
   } catch (error) {
-    console.error('Error signing up:', error);
-    // Handle error accordingly, e.g., dispatch an error action
+    dispatch(setLoadingFalse());
+    dispatch(setError(errorMessageGenerator(error.code,language)))
   }
 };
-
-export const logOut = () => async (dispatch) => {
+export const forgotPassword = (email, language) => async (dispatch) => {
+  dispatch(setLoadingTrue());
   try {
-    console.log('User logged out');
-    const response = await signOut(firebaseAuth);
-    console.log('User logged out:', response)
-    dispatch(logOutSuccess());
-    console.log('User logged out');
+    await sendPasswordResetEmail(firebaseAuth, email);
+    dispatch(setSuccess(successMessageGenerator('resetPassword',language)));
   } catch (error) {
-    console.error('Error logging out:', error);
-    // Handle error accordingly, e.g., dispatch an error action
+    dispatch(setError(errorMessageGenerator(error.code,language)));
+  } finally {
+    dispatch(setLoadingFalse());
+  }
+};
+export const logOut = (language) => async (dispatch) => {
+  try {
+    dispatch(setLoadingTrue());
+    await signOut(firebaseAuth);
+    dispatch(logOutSuccess());
+    dispatch(setLoadingFalse());
+    dispatch(setSuccess(successMessageGenerator('logout',language)));
+    dispatch(resetAll());
+  } catch (error) {
+    dispatch(setLoadingFalse());
+    dispatch(setError(errorMessageGenerator(error.code,language)))
+
   }
 };

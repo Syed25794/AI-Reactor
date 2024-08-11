@@ -1,8 +1,10 @@
 import { Box, Button, Paper } from '@mui/material';
-import SelectedElementsBox from './SelectedElementsBox';
+import { useSelector } from 'react-redux';
+import Flask from './Flask';
 
 const SelectedElementsContainer = ({ selectedElements , setSelectedElements, makeReactant}) => {
-  
+  const languageStore = useSelector((state) => state.language);
+  const { translations, language } = languageStore;
   const handleRemove = (symbol) => {
     setSelectedElements((prevElements) =>
       prevElements.filter((element) => element.symbol !== symbol)
@@ -10,17 +12,24 @@ const SelectedElementsContainer = ({ selectedElements , setSelectedElements, mak
   };
 
   return (
-    <Paper sx={{padding:'0.5rem 1rem',display:"flex",alignItems:"center"}}>
+    <Paper elevation={3} sx={{padding:'1rem',display:"flex",marginTop:"1rem",alignItems:"center", width:"95%"}}>
       <Box sx={{display:"flex" ,flexWrap:"wrap",width:'93%'}}>
-        {selectedElements.map((element,index) => (
-          <SelectedElementsBox
-            key={element.atomicNumber+element.name}
-            element={element}
-            onRemove={handleRemove}
-          />
+        {selectedElements?.map((element,index) => (
+          
+          <Paper elevation={2} sx={{marginRight:'0.5rem',paddingBottom:"0.3rem"}}>
+            <Flask 
+              key={index}
+              name={language === 'en' ? element?.name : language === 'hi' ? element?.hindiName : element?.urduName}
+              symbol={element?.symbol}
+              state={element?.state}
+              formula={element?.symbol}
+              isRemove={true}
+              onRemove={handleRemove}
+            />
+          </Paper>
         ))}
       </Box>
-      <Button variant='text' sx={{width:"6rem",height:"2.5rem"}} onClick={makeReactant}>Do Magic</Button>
+      <Button variant='text' sx={{width:"6rem",height:"2.5rem"}} onClick={makeReactant}>{translations.doMagic}</Button>
     </Paper>
   );
 };

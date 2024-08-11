@@ -11,18 +11,20 @@ import Slide from '@mui/material/Slide';
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
 import ChemicalReaction from './ChemicalReaction';
+import { useSelector } from 'react-redux';
 
 const Transition = forwardRef(function Transition( props,ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function ReactantsDialog({ openReactantDialog, setOpenReactantDialog, producedReactants, Id }) {
-  const light = producedReactants[0].environmentFactors.light;
+  const languageStore = useSelector((state) => state.language);
+  const { translations } = languageStore;
   const [idsAdded, setIdsAdded] = useState(false);
 
   useEffect(()=>{
     (function (){
-      producedReactants.map(producedReactant=> {
+      producedReactants?.map(producedReactant=> {
         producedReactant.reactants.forEach((reactant)=>{
           reactant.id = uuid();
         })
@@ -61,17 +63,17 @@ export default function ReactantsDialog({ openReactantDialog, setOpenReactantDia
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              All Possibles Reactants
+              {translations.allPossibleReactions}
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              <Link to='/'>
-                Save Reactant
+            <Button autoFocus sx={{color:"white !important"}} onClick={handleClose}>
+              <Link style={{color:"white",textDecoration:"none"}} to='/'>
+                {translations.goToDashboard}
               </Link>
             </Button>
           </Toolbar>
         </AppBar>
         <List>
-          {producedReactants.map((producedReactant,index)=> (
+          {producedReactants?.map((producedReactant,index)=> (
             <ChemicalReaction producedReactant={producedReactant} isEditable={true} idsAdded={idsAdded} key={index} />
           ))}
         </List>

@@ -1,66 +1,42 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Menu, MenuItem, Select, Box } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { AppBar, Toolbar,  MenuItem, Select, Box, Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../context/AuthReducer/action';
+import { setLanguage } from '../context/LanguageReducer/action';
+import logo from './../assets/images/logo.png';
 
-const Navbar = ({ toggleDrawer, language, setLanguage, darkMode, toggleDarkMode }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+const Navbar = ({ setLoginModalOpen }) => {
   const { isAuthenticated } = useSelector(state => state.auth);
   const dispatch = useDispatch();
-  console.log('isAuthenticated', isAuthenticated)
+  const languageStore = useSelector((state) => state.language);
+  const { language, translations } = languageStore;
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleLogOut = (e) => {
     e.preventDefault();
-    console.log('logOut', e);
-    dispatch(logOut());
+    dispatch(logOut(language));
   }
+
+  const handleLanguageChange = (language) => {
+    dispatch(setLanguage(language));
+  };
 
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Box>
-          <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
-            <MenuIcon />
-          </IconButton>
+        <Box sx={{margin:"2px"}}>
+          <img width={'60px'} alt='Logo of Magic Reactor' style={{borderRadius:"30px"}} src={logo} />
         </Box>
         <Box>
           <Select
             value={language}
-            onChange={(e) => setLanguage(e.target.value)}
+            onChange={(e) => handleLanguageChange(e.target.value)}
             sx={{ color: 'white', marginRight: 2 }}
           >
             <MenuItem value="en">English</MenuItem>
-            <MenuItem value="es">Spanish</MenuItem>
+            <MenuItem value="hi">हिंदी</MenuItem>
+            <MenuItem value="ur">اردو</MenuItem>
           </Select>
-          <IconButton color="inherit" onClick={toggleDarkMode}>
-            {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-          {isAuthenticated && <>
-            <IconButton edge="end" color="inherit" onClick={handleMenu}>
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
-            </Menu>
-          </>}
+          {isAuthenticated ? <Button onClick={handleLogOut} variant='contained'>{translations.logOut}</Button> : <Button onClick={()=>setLoginModalOpen(true)} variant='contained'>{translations.signIn}</Button>}
         </Box>
       </Toolbar>
     </AppBar>

@@ -7,7 +7,7 @@ import { columnData } from './../utils/AllGroupData'
 const PeriodColumn = () => {
   return (
     <Box sx={{display:"flex",flexDirection:"column", gap:"0.3rem"}}>
-      {columnData.map(boxData => (
+      {columnData?.map(boxData => (
         boxData.topValue ? <TableHeadBox key={boxData.id} group={boxData.topValue} period={boxData.bottomValue} /> :
         <PeriodBox key={boxData.id} periodNumber={boxData.periodNumber} />
       ))}

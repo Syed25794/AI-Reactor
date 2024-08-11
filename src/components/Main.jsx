@@ -1,65 +1,62 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import { Box, CssBaseline } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ChemicalReactionPage from './ChemicalReactionPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { firebaseAuth } from '../firebase/firebase';
-import { logOut, logOutSuccess, signInSuccess } from '../context/AuthReducer/action';
-import { Flask } from './Flask';
+import { signInSuccess } from '../context/AuthReducer/action';
 import { getChemicalReactionHistory } from '../context/ReactionReducer/action';
 
-const Main = () => {
-  const [open, setOpen] = useState(false);
-  const [language, setLanguage] = useState('en');
-  const [darkMode, setDarkMode] = useState(false);
+import LoadingModal from './LoadingModal';
+
+const Main = ( ) => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [language, setLanguage] = useState('english');
+  const [reaction, setReaction] = useState('');
 
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const loadingStore = useSelector((state) => state.loading);
+  const reactionsHistory = useSelector(state => state.reactions.history);
+  const { loading } = loadingStore;
+ 
 
+  
   useEffect(() => {
-    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
-      console.log('user',user);
+    firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
         dispatch(signInSuccess(user));
         dispatch(getChemicalReactionHistory(user.uid))
-      } else {
-        dispatch(logOut());
       }
     });
-
-    return () => unsubscribe();
   }, [dispatch]);
 
+  useEffect(()=>{
+    if( !isAuthenticated ){
+      setLoginModalOpen(true);
+    }
+  },[isAuthenticated])
   const toggleDrawer = () => {
-    setOpen(!open);
+    setOpenDrawer(!openDrawer);
   };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
-  const theme = useMemo(() =>
-    createTheme({
-      palette: {
-        mode: darkMode ? 'dark' : 'light',
-      },
-    }), [darkMode]
-  );
-  const reactant = { color: 'red'};
+  const setHistoryReaction = (reactionId) => {
+    const desiredHistory = reactionsHistory.filter(reaction => reaction.id === reactionId );
+    setReaction(desiredHistory[0].reactions);
+    setOpenDrawer(false);
+  }
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
+      <LoadingModal loading={loading} />
       <CssBaseline />
-      {/* <Flask reactant={reactant}/> */}
-      <Box sx={{ display: 'flex', position: 'relative' }}>
+      <Box sx={{ display: 'flex', position: 'relative',backgroundColor:"#e8ecef",height:'100vh' }}>
         <Navbar 
           toggleDrawer={toggleDrawer} 
           language={language} 
           setLanguage={setLanguage} 
-          darkMode={darkMode} 
-          toggleDarkMode={toggleDarkMode} 
+          setLoginModalOpen={setLoginModalOpen} 
         />
         <Box
           component="main"
@@ -69,11 +66,12 @@ const Main = () => {
             position: 'relative', 
           }}
         >
-         {isAuthenticated && <Sidebar open={open} toggleDrawer={toggleDrawer} />}
-          <ChemicalReactionPage />
+          
+         {isAuthenticated && <Sidebar open={openDrawer} setReaction={setHistoryReaction} toggleDrawer={toggleDrawer} />}
+          <ChemicalReactionPage reaction={reaction} loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen} />
         </Box>
       </Box>
-    </ThemeProvider>
+    </>
   );
 };
 

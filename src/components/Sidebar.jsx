@@ -1,16 +1,16 @@
-import React from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Typography, Button } from '@mui/material';
-import { Home, Settings, Input as InputIcon } from '@mui/icons-material';
+import { Drawer, List, ListItem, IconButton, Typography, Button } from '@mui/material';
+import { Input as InputIcon } from '@mui/icons-material';
 import ScienceIcon from '@mui/icons-material/Science';
 import { useSelector } from 'react-redux';
 import SideBarReaction from './SideBarReaction';
 
-const drawerWidth = 340;
+const drawerWidth = 700;
 
-const Sidebar = ({ open, toggleDrawer }) => {
+const Sidebar = ({ open, toggleDrawer, setReaction }) => {
   const reactionsHistory = useSelector(state => state.reactions.history);
+  const languageStore = useSelector((state) => state.language);
+  const { translations } = languageStore;
 
-  console.log('reaction history-------->', reactionsHistory)
   return (
     <>
       <Drawer
@@ -34,19 +34,18 @@ const Sidebar = ({ open, toggleDrawer }) => {
           },
         }}
       >
-        <Typography sx={{padding:"1.5rem 1rem"}}>Chemical Reaction History</Typography>
+        <Typography sx={{padding:"1.5rem 1rem"}}>{translations.chemicalReactionHistory}</Typography>
         <List sx={{ marginTop: '3rem' }}>
-          { reactionsHistory.map(reactionHistory=> (
-            reactionHistory.reactions.map((reaction,index)=> {
-              console.log('reaction history-------->',reaction);
-              return <ListItem key={index} sx={{':hover': {  backgroundColor: 'gray'},display:"flex",justifyContent:"space-between"}}>
+          { reactionsHistory?.map(reactionHistory=> {
+            return reactionHistory?.reactions?.map((reaction,index)=> {
+              return <ListItem key={index} sx={{':hover': {  backgroundColor: '#d6d7db'},display:"flex",justifyContent:"space-between"}}>
                       <SideBarReaction reactants={reaction.reactants} products={reaction.products} />
-                      <Button variant='contained'>
+                      <Button onClick={()=>setReaction(reactionHistory.id)}  variant='contained'>
                         <ScienceIcon />
                       </Button>
                     </ListItem>
             })
-          ))}
+          })}
         </List>
       </Drawer>
       <IconButton

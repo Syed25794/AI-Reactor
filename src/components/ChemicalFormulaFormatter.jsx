@@ -1,4 +1,3 @@
-import React from 'react';
 import { constants } from '../constant/constants';
 
 
@@ -6,7 +5,7 @@ import { constants } from '../constant/constants';
 const formatFormula = (formula) => {
   // Regular expression to find numbers that should be subscripts
   const regex = /([A-Z][a-z]?)(\d*)|(\()(\d*)|(\))(\d*)/g;
-  return formula.replace(regex, (match, element, subscript, openParen, openSubscript, closeParen, closeSubscript) => {
+  return formula?.replace(regex, (match, element, subscript, openParen, openSubscript, closeParen, closeSubscript) => {
     if (subscript) {
       return `${element}<sub>${subscript}</sub>`;
     }

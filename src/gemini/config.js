@@ -1,12 +1,3 @@
-/*
- * Install the Generative AI SDK
- *
- * $ npm install @google/generative-ai
- *
- * See the getting started guide for more information
- * https://ai.google.dev/gemini-api/docs/get-started/node
- */
-
 const { GoogleGenerativeAI,HarmCategory,HarmBlockThreshold } = require("@google/generative-ai");
 const { constants } = require('./../constant/constants');
 
@@ -34,7 +25,7 @@ const safetySettings = [
 
 const model = genAI.getGenerativeModel({
   model: constants.Gemini_Modal, safetySettings,
-  systemInstruction: 'You are an expert in Chemistry.Give answer only what asked and how asked. Do not give extra information or extra things which is not asked in prompt.'
+  systemInstruction: 'You are an expert in Chemistry.Give answer only what asked and how asked. Do not give extra information or extra things which is not asked in prompt.Do not create any element or chemical reactant which does not exist in the real world.'
 });
 
 const generationConfig = {

@@ -5,9 +5,12 @@ import {
   REMOVE_REACTANT,
   ADD_TO_HISTORY,
   SET_CHEMICAL_REACTIONS_HISTORY,
+  RESET_ALL,
 } from "./actionTypes";
 import { firestoreDb } from "../../firebase/firebase";
 import { query } from "firebase/database";
+import { setError } from "../LoadingReducer/action";
+import { errorMessageGenerator } from "../../constant/constants";
 
 // Action to update the reactants
 export const updateReactants = (reactants) => ({
@@ -25,6 +28,11 @@ export const addReactant = (reactant) => ({
 export const removeReactant = (id) => ({
   type: REMOVE_REACTANT,
   payload: id,
+});
+
+// Action to reset all the reactants, history and products
+export const resetAll = () => ({
+  type : RESET_ALL
 });
 
 // Action to set the chemial Reaction history
@@ -49,8 +57,7 @@ export const getChemicalReactionHistory = (userId) => async (dispatch) => {
       chemicalReactions.push({ id: doc.id, ...doc.data() });
     });
     dispatch(setChemialReactionHistory(chemicalReactions));
-    console.log('Chemical reaction history',chemicalReactions);
   } catch (error) {
-    console.error('Error in  getChemicalReactionHistory:', error);
+    dispatch(setError(errorMessageGenerator('error')));
   }
 };
