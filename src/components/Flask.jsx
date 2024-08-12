@@ -16,7 +16,7 @@ const RemoveIcon = styled(IconButton)(({ theme }) => ({
 
 const Flask = ({ name, formula, state, isRemove, onRemove, symbol, color }) => {
   let flaskType = state === "s" ? solidFlask : state === "g" ? gasFlask : liquidFlask;
-  // flaskType = flaskDifferentColors(flaskType, color, state);
+  flaskType = flaskDifferentColors(flaskType, color, state);
 
 
 

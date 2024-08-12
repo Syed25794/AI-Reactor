@@ -24,6 +24,7 @@ const SelectedElementsContainer = ({ selectedElements , setSelectedElements, mak
               state={element?.state}
               formula={element?.symbol}
               isRemove={true}
+              color={element?.color}
               onRemove={handleRemove}
             />
           </Paper>

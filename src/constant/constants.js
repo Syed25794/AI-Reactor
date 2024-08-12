@@ -35,83 +35,122 @@ export function hexToRGBAArray(hex) {
         cleanHex = cleanHex?.split('')?.map(char => char + char)?.join('');
     }
 
-    let r = parseInt(cleanHex?.substring(0, 2), 16) / 255;
-    let g = parseInt(cleanHex?.substring(2, 4), 16) / 255;
-    let b = parseInt(cleanHex?.substring(4, 6), 16) / 255;
+    let r = Number((parseInt(cleanHex?.substring(0, 2), 16) / 255).toFixed(4));
+    let g = Number((parseInt(cleanHex?.substring(2, 4), 16) / 255).toFixed(4));
+    let b = Number((parseInt(cleanHex?.substring(4, 6), 16) / 255).toFixed(4));
     let a = cleanHex?.length === 8 ? parseInt(cleanHex?.substring(6, 8), 16) / 255 : 1;
 
     // Return the RGBA array
     return [r, g, b, a];
 }
 
-export function flaskDifferentColors(flaskType, color, state){
-    const isWhite = isWhiteVariant(color);
-    if( !isWhite ){
-
-        const rgba = hexToRGBAArray(color);
-        const bubbleColor = rgba;
-        const backgroundColor = rgba;
-        bubbleColor[3] = 0.3 ;
-        backgroundColor[3] = 0.6; 
-      
-        if( state === 'g' || state === 'l' ){
-          // main liquid color
-          flaskType["layers"][6].shapes[0].it[1].c["k"] = rgba;
-          // background color
-          flaskType["layers"][8].shapes[0].it[1].c["k"] = backgroundColor;
-          flaskType["layers"][10].shapes[0].it[4].c["k"] = [1, 0, 0, 1]
-        }
-      
-        if( state === 'g' ){
-          // bubbles color ;
-          flaskType["assets"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 4 in comp_0
-          flaskType["assets"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 3 in comp_0
-          flaskType["assets"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 2 in comp_0
-          flaskType["assets"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 1 in comp_0
-          
-          flaskType["assets"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 1 in assest
-          flaskType["assets"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 2 in assest
-          flaskType["assets"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 3 in assest
-          flaskType["assets"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 4 in assest
-          flaskType["layers"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 5 in assest
-          flaskType["layers"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 6 in assest
-          flaskType["layers"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 7 in assest
-          flaskType["layers"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 8 in assest
-          flaskType["layers"][1].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 9 in assest
-          flaskType["layers"][1].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 10 in assest
-          flaskType["layers"][1].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 11 in assest
-          flaskType["layers"][1].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 12 in assest
-          flaskType["layers"][2].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 13 in assest
-          flaskType["layers"][2].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 14 in assest
-          flaskType["layers"][2].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 15 in assest
-          flaskType["layers"][2].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 16 in assest
-        }
-    }
-
-    return flaskType;
+function isExactlyWhite(color) {
+    return color?.toLowerCase() === '#ffffff';
 }
-function isWhiteVariant(color) {
-    // Convert hex color to RGB
-    const r = parseInt(color?.slice(1, 3), 16);
-    const g = parseInt(color?.slice(3, 5), 16);
-    const b = parseInt(color?.slice(5, 7), 16);
+
+export function flaskDifferentColors(flaskType, color, state){
+    if( color && state ){
+        const isWhite = isExactlyWhite(color);
+
+        // If reactant color is not white
+        if( !isWhite ){
     
-    // Set thresholds for determining "white variant"
-    const lightnessThreshold = 240;  // Minimum value for R, G, and B channels to be considered light enough
-    const maxColorDifference = 15;   // Maximum difference allowed between R, G, and B channels
-
-    // Check if the color is light enough
-    if (r >= lightnessThreshold && g >= lightnessThreshold && b >= lightnessThreshold) {
-        // Check if the color has low saturation
-        const maxChannel = Math.max(r, g, b);
-        const minChannel = Math.min(r, g, b);
-
-        if (maxChannel - minChannel <= maxColorDifference) {
-            return true;
+            const rgba = hexToRGBAArray(color);
+            const bubbleColor = rgba;
+            const backgroundColor = rgba;
+            const flaskBorder = rgba;
+            bubbleColor[3] = 1 ;
+            backgroundColor[3] = 0.6; 
+            flaskBorder[3] = 0.8;
+          
+            if( state === 's' ){
+                for( let i = 0 ; i < 13 ; i++ ){
+                    flaskType['layers'][i]['shapes'][1]['c']['k'] = rgba;
+                }
+            }
+            if( state === 'g' || state === 'l' ){
+              // main liquid color
+              flaskType["layers"][6].shapes[0].it[1].c["k"] = bubbleColor;
+              // background color
+              flaskType["layers"][8].shapes[0].it[1].c["k"] = backgroundColor;
+              // flask border
+              flaskType["layers"][10].shapes[0].it[4].c["k"] = flaskBorder;
+            }
+          
+            if( state === 'g' ){
+              // bubbles color ;
+              flaskType["assets"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 4 in comp_0
+              flaskType["assets"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 3 in comp_0
+              flaskType["assets"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 2 in comp_0
+              flaskType["assets"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 1 in comp_0
+              
+              flaskType["assets"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 1 in assest
+              flaskType["assets"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 2 in assest
+              flaskType["assets"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 3 in assest
+              flaskType["assets"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 4 in assest
+              flaskType["layers"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 5 in assest
+              flaskType["layers"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 6 in assest
+              flaskType["layers"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 7 in assest
+              flaskType["layers"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 8 in assest
+              flaskType["layers"][1].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 9 in assest
+              flaskType["layers"][1].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 10 in assest
+              flaskType["layers"][1].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 11 in assest
+              flaskType["layers"][1].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 12 in assest
+              flaskType["layers"][2].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 13 in assest
+              flaskType["layers"][2].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 14 in assest
+              flaskType["layers"][2].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 15 in assest
+              flaskType["layers"][2].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 16 in assest
+            }
+        }else {
+            const gray = [0.8274, 0.8274, 0.8274, 1];
+            const bubbleColor = gray;
+            const backgroundColor = gray;
+            const flaskBorder = gray;
+            bubbleColor[3] = 1 ;
+            backgroundColor[3] = 0.6; 
+            flaskBorder[3] = 0.8;
+            if( state === 's' ){
+                for( let i = 0 ; i < 13 ; i++ ){
+                    flaskType['layers'][i]['shapes'][1]['c']['k'] = gray ;
+                }
+            }
+            if( state === 'g' || state === 'l' ){
+                // main liquid color
+                flaskType["layers"][6].shapes[0].it[1].c["k"] = bubbleColor;
+                // background color
+                flaskType["layers"][8].shapes[0].it[1].c["k"] = backgroundColor;
+                // flask border
+                flaskType["layers"][10].shapes[0].it[4].c["k"] = flaskBorder;
+              }
+            
+              if( state === 'g' ){
+                // bubbles color ;
+                flaskType["assets"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 4 in comp_0
+                flaskType["assets"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 3 in comp_0
+                flaskType["assets"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 2 in comp_0
+                flaskType["assets"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 1 in comp_0
+                
+                flaskType["assets"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 1 in assest
+                flaskType["assets"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 2 in assest
+                flaskType["assets"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 3 in assest
+                flaskType["assets"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 4 in assest
+                flaskType["layers"][0].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 5 in assest
+                flaskType["layers"][0].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 6 in assest
+                flaskType["layers"][0].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 7 in assest
+                flaskType["layers"][0].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 8 in assest
+                flaskType["layers"][1].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 9 in assest
+                flaskType["layers"][1].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 10 in assest
+                flaskType["layers"][1].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 11 in assest
+                flaskType["layers"][1].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 12 in assest
+                flaskType["layers"][2].layers[0].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 13 in assest
+                flaskType["layers"][2].layers[1].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 14 in assest
+                flaskType["layers"][2].layers[2].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 15 in assest
+                flaskType["layers"][2].layers[3].shapes[0].it[2].c["k"] = bubbleColor; // Bubble 16 in assest
+              }
         }
-    }
     
-    return false;
+        return flaskType;
+    }
 }
 
 
