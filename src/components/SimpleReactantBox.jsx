@@ -53,7 +53,7 @@ const SimpleReactantBox = ({ backgroundColor, name, formula, Id, state, isEditab
             <CheckIcon color="success" />
           </IconButton>
         )}
-        <Paper sx={{ display: 'flex', width: '11.5rem', height: '13rem', borderRadius: '0.5rem', justifyContent: 'center', alignItems: 'center'}} >
+        <Paper sx={{ display: 'flex', width: '9.5rem', height: '13rem', borderRadius: '0.5rem', justifyContent: 'center', alignItems: 'center'}} >
           <Flask color={backgroundColor} name={name} state={state} formula={formula} />
         </Paper>
       </StyledBox>

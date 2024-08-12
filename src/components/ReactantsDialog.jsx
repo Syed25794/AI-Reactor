@@ -12,6 +12,8 @@ import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
 import ChemicalReaction from './ChemicalReaction';
 import { useSelector } from 'react-redux';
+import { Box } from '@mui/material';
+import emptyImage from './../assets/images/emptyCart.gif';
 
 const Transition = forwardRef(function Transition( props,ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -72,11 +74,19 @@ export default function ReactantsDialog({ openReactantDialog, setOpenReactantDia
             </Button>
           </Toolbar>
         </AppBar>
-        <List>
-          {producedReactants?.map((producedReactant,index)=> (
-            <ChemicalReaction producedReactant={producedReactant} isEditable={true} idsAdded={idsAdded} key={index} />
-          ))}
-        </List>
+        {
+          (producedReactants?.length === 0 || producedReactants) ? 
+          <Box sx={{display:"flex",flexDirection:"column", gap:"1rem", paddingTop:"4rem", textAlign:"center", justifyContent:"center", alignItems:"center"}}>
+            <Typography sx={{fontSize:"2rem", fontWeight:"bold"}}>No Chemical Reaction Found!</Typography>
+            <img src={emptyImage} alt='Empty Reactant' />
+          </Box>
+          :
+          <List>
+            {producedReactants?.map((producedReactant,index)=> (
+              <ChemicalReaction producedReactant={producedReactant} isEditable={true} idsAdded={idsAdded} key={index} />
+            ))}
+          </List>
+        }
       </Dialog>
     </>
   );
