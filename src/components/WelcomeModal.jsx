@@ -16,12 +16,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const WelcomeModal = ({ open, setOpen }) => {
+export const WelcomeModal = ({ open, setOpen, setRun }) => {
   const { translations } = useSelector((state) => state.language);
 
   const handleClose = () => {
     setOpen(false);
     localStorage.setItem('isWelcome',true);
+    setRun(true);
   };
 
   return (
@@ -44,6 +45,9 @@ export const WelcomeModal = ({ open, setOpen }) => {
         <DialogContentText sx={{ textAlign: "center", fontSize: "1.2rem" }} component='div' id="alert-dialog-slide-description">
           <Typography sx={{ fontSize: "1.2rem" }}>
             🎉 Welcome to AI Reactor! 🎉
+          </Typography>
+          <Typography sx={{ fontSize: "1.2rem" }}>
+            🚀 Fueled By Gemini And Firebase! 🔥
           </Typography>
           <Typography sx={{ marginTop: "0.5rem" }}>
             Dive into the fascinating world of chemistry, where you can create and experiment with chemical reactions. Use the AI to generate reactants by mixing elements from the periodic table, and explore the endless possibilities. Don't forget to save your reactions by creating an account.

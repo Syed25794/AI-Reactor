@@ -165,14 +165,14 @@ const ChemicalReactionPage = ({ loginModalOpen, setLoginModalOpen, reaction }) =
                   </Box>
                 ))}
                 {reactants.length < constants.maxReactants && (
-                <ReactantBox sx={{ maxWidth: '150px',display:"flex", alignItems:"center" }}>
+                <ReactantBox id='addReactant' sx={{ maxWidth: '150px',display:"flex", alignItems:"center" }}>
                     <Button variant="contained" color="primary" onClick={addReactantInput}>
                       {translations.addReactant}
                     </Button>
                 </ReactantBox>
                 )}
             </Box>
-            <MagicBox elevation={0}>
+            <MagicBox id='performReaction' elevation={0}>
             <Typography variant="h5" color="primary">{translations.magicBox}</Typography>
               <Button variant="contained" color="secondary" sx={{ marginTop: '10px' }} onClick={performReaction}>{translations.performReaction}</Button>
             </MagicBox>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import PeriodColumn from './PeriodColumn';
 import { groupsData, LanthanidesActinidesSeries } from './../utils/AllGroupData';
 import ElementBox from './ElementBox';
@@ -32,8 +32,9 @@ const PeriodicTable = () => {
 
   const makeReactant = async () =>{
     try {
+      
       dispatch(setLoadingTrue());
-      if( selectedElements.length === constants.minSelectedElements ){
+      if( selectedElements.length === constants.minSelectedElements || selectedElements.length === 0 ){
         dispatch(setError(errorMessageGenerator('minSelectedElements',language)));
         dispatch(setLoadingFalse());
       }else if( selectedElements.length >= constants.minSelectedElements && selectedElements.length <= constants.selectedElementsLimits ){
@@ -73,8 +74,10 @@ const PeriodicTable = () => {
       {openReactantDialog && <ReactantsDialog setOpenReactantDialog={setOpenReactantDialog} Id={Id} openReactantDialog={openReactantDialog} producedReactants={producedReactants} />}
 
       <SelectedElementsContainer selectedElements={selectedElements} setSelectedElements={setSelectedElements}  makeReactant={makeReactant} />
-      <Link style={{color:"black",textDecoration:"none"}} to='/'>{translations.goToHome}</Link>
-      <Box sx={{boxShadow:"rgba(0, 0, 0, 0.18) 0px 2px 4px", padding:"1rem",background:"white",borderRadius:"1rem"}}>
+      <Button variant='contained'>
+        <Link style={{color:"black",textDecoration:"none"}} to='/'>{translations.goToHome}</Link>
+      </Button>
+      <Box id='periodicTable' sx={{boxShadow:"rgba(0, 0, 0, 0.18) 0px 2px 4px", padding:"1rem",background:"white",borderRadius:"1rem"}}>
         <Box sx={{display:"flex",gap:"0.5rem",justifyContent:'center',flexDirection:"row"}}>
             {/* Period Column from 1-7 */}
             <PeriodColumn />

@@ -46,7 +46,8 @@ export const translations = {
       solid: "Solid",
       liquid: "Liquid",
       gas: "Gas",
-      close: "Close"
+      close: "Close",
+      goToPeriodicTable: "Go To Periodic Table"
   },
   hi: {
       title: 'जादू का डिब्बा',
@@ -83,7 +84,7 @@ export const translations = {
       saveReactant: 'अभिकारक सहेजें',
       addReactant: "अभिकारक जोड़ें",
       updateReactant: "अभिकारक अपडेट करें",
-      disclaimer:"अस्वीकरण: इस परियोजना द्वारा उत्पन्न रासायनिक प्रतिक्रियाएं हमेशा सही परिणाम नहीं दे सकती हैं। कृपया अन्य स्रोतों से सत्यापित करें। इस जानकारी के उपयोग से उत्पन्न किसी भी दावे के लिए परियोजना के स्वामी जिम्मेदार नहीं हैं।",
+      disclaimer:"अस्वीकरण: इस परियोजना द्वारा उत्पन्न रासायनिक अभिक्रियाएं हमेशा सही परिणाम नहीं दे सकती हैं। कृपया अन्य स्रोतों से सत्यापित करें। इस जानकारी के उपयोग से उत्पन्न किसी भी दावे के लिए परियोजना के स्वामी जिम्मेदार नहीं हैं।",
       performReaction: "प्रतिक्रिया करें",
       goToHome: "होम पर जाएं",
       doMagic: "जादू करें",
@@ -95,7 +96,8 @@ export const translations = {
       solid: "ठोस",
       liquid: "तरल",
       gas: "गैस",
-      close : 'बंद करें'
+      close : 'बंद करें',
+      goToPeriodicTable: 'आवर्त सारणी पर जाएं'
   },
   ur: {
       title: 'جادو کا باکس',
@@ -144,7 +146,8 @@ export const translations = {
       solid: "ٹھوس",
       liquid: "مائع",
       gas: "گیس",
-      close: 'بند کر دیں'
+      close: 'بند کر دیں',
+      goToPeriodicTable: 'دوری جدول پر جائیں'
   }
 };
   

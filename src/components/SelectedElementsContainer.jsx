@@ -29,7 +29,7 @@ const SelectedElementsContainer = ({ selectedElements , setSelectedElements, mak
           </Paper>
         ))}
       </Box>
-      <Button variant='text' sx={{width:"6rem",height:"2.5rem"}} onClick={makeReactant}>{translations.doMagic}</Button>
+      <Button variant='contained' sx={{width:"8rem",height:"2.5rem"}} onClick={makeReactant}>{translations.doMagic}</Button>
     </Paper>
   );
 };

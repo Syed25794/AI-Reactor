@@ -12,37 +12,4 @@ body {
     margin-left: 0 !important;
   }
 }
-/* body, html { */
-  /* margin: 0; */
-  /* padding: 20px; */
-  /* width: 100vw;
-  height: 100vh; */
-  /* overflow: hidden */
-/* } */
-/* 
-.container {
-  width: 90vw;
-  height: 90vh;
-  background-color: red;
-  transition: transform 1s ease, width 1s ease, height 1s ease;
-  overflow: auto; 
-}
-
-@media (max-width: 768px) { 
-  body, html {
-      overflow: auto; 
-      
-  }
-  .container {
-      transform: rotate(90deg);
-      width: 100vh; 
-      height: 100vw; 
-      transform-origin: center; 
-      position: absolute; 
-      top: 50%; 
-      left: 50%; 
-      transform: translate(-50%, -50%) rotate(90deg); 
-      background-color: blue;
-  }
-} */
 

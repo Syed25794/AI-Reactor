@@ -12,12 +12,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export const LoginModal = ({ open, setOpen, children, isSignUp, isForgotPassword }) => {
+export const LoginModal = ({ open, setOpen, children, isSignUp, isForgotPassword}) => {
   const languageStore = useSelector((state) => state.language);
   const { translations } = languageStore;
   const [fiveSeconds, setFiveSeconds] = React.useState(false);
+  const isWelcome = localStorage.getItem('isWelcome');
+  const isWalkthrough = localStorage.getItem('isWalkthrough');
+  
   setTimeout(()=> {
-    setFiveSeconds(true);
+    if( isWalkthrough && isWelcome ){
+      setFiveSeconds(true);
+    }
   },3000)
 
   const handleClose = () => {
