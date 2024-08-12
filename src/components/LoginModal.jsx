@@ -20,7 +20,7 @@ export const LoginModal = ({ open, setOpen, children, isSignUp, isForgotPassword
   const isWalkthrough = localStorage.getItem('isWalkthrough');
   
   setTimeout(()=> {
-    if( isWalkthrough && isWelcome ){
+    if( isWalkthrough || isWelcome ){
       setFiveSeconds(true);
     }
   },3000)

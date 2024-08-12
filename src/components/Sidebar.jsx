@@ -22,20 +22,16 @@ const Sidebar = ({ open, toggleDrawer, setReaction }) => {
           whiteSpace: 'nowrap',
           boxSizing: 'border-box',
           zIndex: 1300, 
-          position: 'absolute', 
           top: 0,
           left: 0,
-          height: '100vh', 
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             transition: 'width 0.3s',
-            position: 'absolute',
-            height: '100vh', 
           },
         }}
       >
-        <Typography sx={{padding:"1.5rem 1rem"}}>{translations.chemicalReactionHistory}</Typography>
-        <List sx={{ marginTop: '3rem' }}>
+        <Typography sx={{marginTop:"5rem",paddingLeft:"1rem",fontWeight:"bold",fontSize:"1.5rem",textDecoration:"underline"}}>{translations.chemicalReactionHistory}</Typography>
+        <List sx={{ marginTop: '1rem' }}>
           { reactionsHistory?.map(reactionHistory=> {
             return reactionHistory?.reactions?.map((reaction,index)=> {
               return <ListItem key={index} sx={{':hover': {  backgroundColor: '#d6d7db'},display:"flex",justifyContent:"space-between"}}>

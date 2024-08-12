@@ -7,6 +7,7 @@ const FormulaBox = ({ formula, color }) => {
     backgroundColor: color || '#fff',
     border:`5px dashed ${color}`,
     borderRadius: '1rem',
+    color: color === "#000000" || color === 'black' ? 'white' : 'black',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
