@@ -75,7 +75,7 @@ export default function ReactantsDialog({ openReactantDialog, setOpenReactantDia
           </Toolbar>
         </AppBar>
         {
-          (producedReactants?.length === 0 || producedReactants) ? 
+          producedReactants?.length === 0 ? 
           <Box sx={{display:"flex",flexDirection:"column", gap:"1rem", paddingTop:"4rem", textAlign:"center", justifyContent:"center", alignItems:"center"}}>
             <Typography sx={{fontSize:"2rem", fontWeight:"bold"}}>No Chemical Reaction Found!</Typography>
             <img src={emptyImage} alt='Empty Reactant' />

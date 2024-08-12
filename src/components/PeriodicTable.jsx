@@ -41,7 +41,11 @@ const PeriodicTable = () => {
         const elementsToReactantPromptString = elementToReactantPrompt(selectedElements, language);
         const result = await chatSession.sendMessage(elementsToReactantPromptString);
         const parsedResult = JSON.parse(result.response.text()).possibleReactions;
-        setProducedReactants(parsedResult);
+        if( parsedResult.length ){
+          setProducedReactants(parsedResult);
+        }else{
+          setProducedReactants([]);
+        }
         setOpenReactantDialog(true);
         dispatch(setLoadingFalse());
         dispatch(setSuccess(successMessageGenerator('makeReactant', language)));
