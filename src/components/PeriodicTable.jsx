@@ -75,7 +75,7 @@ const PeriodicTable = () => {
 
       <SelectedElementsContainer selectedElements={selectedElements} setSelectedElements={setSelectedElements}  makeReactant={makeReactant} />
       <Button variant='contained'>
-        <Link style={{color:"black",textDecoration:"none"}} to='/'>{translations.goToHome}</Link>
+        <Link style={{color:"white",textDecoration:"none"}} to='/'>{translations.goToHome}</Link>
       </Button>
       <Box id='periodicTable' sx={{boxShadow:"rgba(0, 0, 0, 0.18) 0px 2px 4px", padding:"1rem",background:"white",borderRadius:"1rem"}}>
         <Box sx={{display:"flex",gap:"0.5rem",justifyContent:'center',flexDirection:"row"}}>
