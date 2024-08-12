@@ -21,9 +21,9 @@ const ChemicalReaction = ({ producedReactant, idsAdded ,isEditable}) => {
             ))}
         </Box>
         <Box>
-            <Tooltip title={producedReactant?.safetyPrecautions}>
-                <IconButton>
-                    <InfoIcon />
+            <Tooltip title={`Safety Precautions : ${producedReactant?.safetyPrecautions}`}>
+                <IconButton >
+                    <InfoIcon sx={{color:"rgba(250, 2, 2,0.7)"}} />
                 </IconButton>
             </Tooltip>
         </Box>
