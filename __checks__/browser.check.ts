@@ -22,36 +22,23 @@ new BrowserCheck('browser-check-2', {
 })
 
 // check for going periodic table page by clicking on button
-// new BrowserCheck('browser-check-3', {
-//     name: 'Go To Periodic Table Page By Clicking on Button',
-//     group, 
-//     code: { entrypoint: path.join(__dirname, './goto-periodic-page.spec.ts')}
-// })
-// import { test, expect } from '@playwright/test';
-// 1
-// const url = process.env.URL!;
+new BrowserCheck('browser-check-3', {
+    name: 'Go To Periodic Table Page By Clicking on Button',
+    group, 
+    frequency: Frequency.EVERY_24H,
+    code: { entrypoint: path.join(__dirname, './periodic-page-click.spec.ts')}
+})
 
-// test('Go To Periodic Table Page By Clicking on Button', async( { browser })=> {
-//     const context = await browser.newContext( { ignoreHTTPSErrors : true });
-//     const page = await context.newPage();
-//     const response = await page.goto(url);
-//     await page.getByTestId('GO TO PERIODIC TABLE').click();
-//     // await page.getByRole('button', { name : 'GO TO PERIODIC TABLE'}).click();
-//     expect(response?.status()).toBeLessThan(400);
-//     await page.screenshot({ path : '.screenshot.jpg'})
-// })
-
-// test.setTimeout(300000);
 
 //close the welcome page
 new BrowserCheck('browser-check-5', {
-    name: 'Close the welcome pop-up',
+    name: 'Close the welcome pop-up and walkthrough pop-up',
     group,
     frequency : Frequency.EVERY_24H,
     code: { entrypoint : path.join(__dirname, './close-welcome.spec.ts')}
 })
 
-// change language
+// add the reactant
 new BrowserCheck('browser-check-4',{
     name: 'Add the reactant',
     group,
