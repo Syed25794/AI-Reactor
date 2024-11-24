@@ -25,7 +25,7 @@ test('Add the reactant', async( { browser } )=> {
 
     await page.getByRole("button", { name: 'SAVE REACTANT'}).click();
 
-    const updateButton = await page.getByRole('button', { name : 'Update Reactant'});
+    const updateButton = page.getByRole('button', { name : 'Update Reactant'});
 
     await expect(updateButton).toBeVisible();
     expect(response?.status()).toBeLessThan(400);

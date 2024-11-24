@@ -31,7 +31,7 @@ new BrowserCheck('browser-check-3', {
 
 
 //close the welcome page
-new BrowserCheck('browser-check-5', {
+new BrowserCheck('browser-check-4', {
     name: 'Close the welcome pop-up and walkthrough pop-up',
     group,
     frequency : Frequency.EVERY_24H,
@@ -39,9 +39,17 @@ new BrowserCheck('browser-check-5', {
 })
 
 // add the reactant
-new BrowserCheck('browser-check-4',{
+new BrowserCheck('browser-check-5',{
     name: 'Add the reactant',
     group,
     frequency : Frequency.EVERY_24H,
     code : { entrypoint : path.join(__dirname,'./add-reactant.spec.ts')}
+})
+
+// Perform the reaction
+new BrowserCheck('browser-check-6', {
+    name : 'Perform the reaction',
+    group,
+    frequency: Frequency.EVERY_24H,
+    code : { entrypoint : path.join(__dirname, './perform-reaction.spec.ts')}
 })

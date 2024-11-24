@@ -13,5 +13,5 @@ test('Periodic Table Page Browser Check', async( { browser }) => {
     await page.getByRole('button', { name : 'SKIP'}).click();
 
     expect(response?.status()).toBeLessThan(400);
-    await page.screenshot( { path : './images/screenshot2.jpg'});
+    await page.screenshot( { path : './screenshot.jpg'});
 })

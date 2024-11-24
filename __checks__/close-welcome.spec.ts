@@ -7,7 +7,7 @@ test('Close the welcome pop up and walkthrough', async( { browser } ) => {
     const response = await page.goto(url);
     await page.waitForLoadState("domcontentloaded");
     // close the welcome pop-up
-    const popupButton = await page.getByRole('button', { name : 'Close'}).click();
+    await page.getByRole('button', { name : 'Close'}).click();
     // close the walkthrough pop-up
     page.getByRole('button', { name : 'SKIP'}).click();
     expect(response?.status());
