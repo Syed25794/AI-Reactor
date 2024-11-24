@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 const url = process.env.URL!;
+test.setTimeout(240000)
 
 test('Perform the reaction', async( { browser } ) => {
-    test.setTimeout(120000)
     const context = await browser.newContext({ ignoreHTTPSErrors : true });
     const page = await context.newPage();
     const response = await page.goto(url);
@@ -28,7 +28,7 @@ test('Perform the reaction', async( { browser } ) => {
     
         // add the reactant
         await page.getByRole('button', { name : 'SAVE REACTANT'}).click();
-
+        
         if( reactant.formula === 'H2' ){
             // if login pop-up open then close it
             const loginPopUp = page.getByRole('button', { name : 'SKIP'});
@@ -36,16 +36,16 @@ test('Perform the reaction', async( { browser } ) => {
             if( loginPopUpOpened ){
                 loginPopUp.click();
             }
-            // const updateButton = page.getByRole('button', { name : 'Update Reactant'});
-    
-            // await expect(updateButton).toBeVisible();
+            const updateButton = page.getByRole('button', { name : 'Update Reactant'});
+            
+            await expect(updateButton).toBeVisible();
         }
     }
-
-    await page.getByRole('button', { name : 'Perform Reaction'}).click();
-    // const updateButton = page.getByRole('button', { name : 'Update Reactant'});
     
-    // await expect(updateButton).toBeVisible();
+    await page.getByRole('button', { name : 'Perform Reaction'}).click();
+    const performReactionButton = page.getByRole('button', { name : 'Perform Reaction'});
+    
+    await expect(performReactionButton).toBeVisible();
     expect(response?.status()).toBeLessThan(500);
     await page.screenshot({ path : 'screenshot.jpg'});
 })
