@@ -1,70 +1,119 @@
-# Getting Started with Create React App
+# AI Reactor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+AI Reactor is an innovative platform that allows users to create, experiment with, and explore chemical reactions in a simulated environment. Leveraging AI, users can mix elements from the periodic table, discover potential reactants, and interact with generated products—all from the convenience of a multilingual and intuitive interface. User can also save their chemical reaction by creating an account on the platform. Let's explore the AI Reactor. Here is the application walkthrough link -> https://www.youtube.com/watch?v=uFhTjBkIpjo 
 
-## Available Scripts
 
-In the project directory, you can run:
+## Tech Stacks
+AI Reactor is built with the following technologies:
+<ul>
+  <li>Frontend: HTML | CSS | JavaScript | React </li>
+  <li>Backend: Gemini API | JavaScript</li>
+  <li>Database & Authentication: Firebase</li>
+  <li>Monitoring & Testing: Checkly</li>
+</ul>
 
-### `npm start`
+## Welcome and walkthrough Interface
+The welcome page and a walkthrough of the main page will open for the user's first visit.
+</br>
+</br>
+</br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![Screenshot 2024-11-26 105516](https://github.com/user-attachments/assets/0343ce8f-f786-4a09-a97e-d24c2fd46c9a)
+</br>
+</br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![Screenshot 2024-11-26 105524](https://github.com/user-attachments/assets/1c549216-9a16-4c96-ad62-3defd96992eb)
+</br>
+</br>
+</br>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Add or Select Reactant Interface
+Users can type their choice of elements or compounds or select them directly from the periodic table. The application utilizes the Gemini API to leverage AI for intelligently correcting reactant names, formulas, and even their states.
+</br>
+</br>
+</br>
 
-### `npm run build`
+![Screenshot 2024-11-26 105537](https://github.com/user-attachments/assets/a63745d8-194c-4e83-b84a-cc2a9e69c15b)
+</br>
+</br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Screenshot 2024-11-26 105555](https://github.com/user-attachments/assets/b7ca60dc-17fa-4b4a-9501-fd5f2afc5642)
+</br>
+</br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Screenshot 2024-11-26 105605](https://github.com/user-attachments/assets/8f720f01-22a0-40bc-8660-17d0019077d9)
+</br>
+</br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![Screenshot 2024-11-26 105630](https://github.com/user-attachments/assets/53eb90f7-5585-4fb2-8775-d5c5a5443574)
+</br>
+</br>
 
-### `npm run eject`
+![Screenshot 2024-11-26 105641](https://github.com/user-attachments/assets/683aaeed-6804-4594-b3e2-d3346503aab8)
+</br>
+</br>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![Screenshot 2024-11-26 105726](https://github.com/user-attachments/assets/43165a8c-f696-4572-8072-45b8a6a712ed)
+</br>
+</br>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Screenshot 2024-11-26 105753](https://github.com/user-attachments/assets/f227c8b2-4086-416e-8ff7-d53e7820bd48)
+</br>
+</br>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+![Screenshot 2024-11-26 105802](https://github.com/user-attachments/assets/7c93df49-09d5-4895-8b74-fad3a11a719c)
+</br>
+</br>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Login And Sign-up Pop-up
+Users can save their reaction history by creating an account and logging in. This ensures that their experiments and results are securely stored for future reference.
+</br>
+</br>
+</br>
+![image](https://github.com/user-attachments/assets/d4d16b13-9432-44b4-a06f-80e377ff707e)
+</br>
+</br>
+</br>
+![Screenshot 2024-11-26 105840](https://github.com/user-attachments/assets/1376c245-6aa1-4fca-b064-1a68038c32b5)
+</br>
+</br>
+</br>
 
-## Learn More
+## Selecting Elements from the Periodic Table and Creating Compounds
+Users can select individual elements from the periodic table to create compounds. These compounds can then be used on the final reaction page to explore chemical reactions.
+</br>
+</br>
+</br>
+![Screenshot 2024-11-26 105910](https://github.com/user-attachments/assets/7cedebe3-0812-48fb-8136-2e3570aa8057)
+</br>
+</br>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Screenshot 2024-11-26 105925](https://github.com/user-attachments/assets/4a2bf610-c9bf-4bda-8112-b7b3bf239be3)
+</br>
+</br>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Screenshot 2024-11-26 105943](https://github.com/user-attachments/assets/7407c4bb-d3d0-46cb-afd6-30b14e650db3)
+</br>
+</br>
+</br>
 
-### Code Splitting
+## Perform Final Reaction
+Users can perform the  final reaction on the dashboard.
+</br>
+</br>
+</br>
+![Screenshot 2024-11-26 105953](https://github.com/user-attachments/assets/c0b7931b-1a94-43e9-b48c-ca168ba4a7ba)
+</br>
+</br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![Screenshot 2024-11-26 110003](https://github.com/user-attachments/assets/638c26ae-1ae5-4b03-a32a-133869276696)
+</br>
+</br>
 
-### Analyzing the Bundle Size
+![Screenshot 2024-11-26 110033](https://github.com/user-attachments/assets/609ba76d-e353-4211-857f-6e18efb8c6bc)
+</br>
+</br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Thanks for taking the time to explore the AI Reactor.
