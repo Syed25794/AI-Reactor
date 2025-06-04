@@ -3,7 +3,7 @@ export const constants = {
     ActinidesSeriesFirstElementSymbol : 'Ac',
     selectedElementsLimits : 8,
     minSelectedElements : 1,
-    Gemini_Modal : "gemini-1.5-pro",
+    Gemini_Modal : "gemini-2.0-flash",
     responseMimeTypeTextPlain : "text/plain",
     responseMimeTypeJSON : "application/json",
     temperatureUnit: 'Kalvin',
