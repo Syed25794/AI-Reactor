@@ -1,4 +1,4 @@
-const { GoogleGenerativeAI,HarmCategory,HarmBlockThreshold } = require("@google/generative-ai");
+const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require("@google/generative-ai");
 const { constants } = require('./../constant/constants');
 
 const apiKey = process.env.REACT_APP_GEMINI_API_KEY;
@@ -15,17 +15,18 @@ const safetySettings = [
   },
   {
     category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE
+    threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
   },
-  { 
+  {
     category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-    threshold: HarmBlockThreshold.BLOCK_NONE
+    threshold: HarmBlockThreshold.BLOCK_NONE,
   }
 ];
 
 const model = genAI.getGenerativeModel({
-  model: constants.Gemini_Modal, safetySettings,
-  systemInstruction: 'You are an expert in Chemistry.Give answer only what asked and how asked. Do not give extra information or extra things which is not asked in prompt.Do not create any element or chemical reactant which does not exist in the real world.'
+  model: constants.Gemini_Modal,
+  safetySettings,
+  systemInstruction: 'You are an expert in Chemistry. Give answer only what asked and how asked. Do not give extra information or extra things which is not asked in prompt. Do not create any element or chemical reactant which does not exist in the real world.'
 });
 
 const generationConfig = {
@@ -36,9 +37,9 @@ const generationConfig = {
   responseMimeType: constants.responseMimeTypeJSON,
 };
 
-const chatSession = model.startChat({
-    generationConfig,
-    history: [],
+const createChatSession = () => model.startChat({
+  generationConfig,
+  history: [],
 });
 
-module.exports = chatSession;
+module.exports = createChatSession;

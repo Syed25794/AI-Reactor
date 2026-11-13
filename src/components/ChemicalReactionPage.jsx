@@ -8,7 +8,7 @@ import { addReactant, getChemicalReactionHistory, removeReactant } from '../cont
 import {v4 as uuid} from 'uuid';
 import { constants, errorMessageGenerator, successMessageGenerator } from '../constant/constants';
 import { elementToReactantPrompt } from '../prompts/prompts';
-import chatSession from '../gemini/config';
+import createChatSession from '../gemini/config';
 import ChemicalReaction from './ChemicalReaction';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
@@ -114,8 +114,10 @@ const ChemicalReactionPage = ({ loginModalOpen, setLoginModalOpen, reaction }) =
       if( reactants.length <= constants.maxReactants ){
         dispatch(setLoadingTrue());
         const elementsToReactantPromptString = elementToReactantPrompt(reactants,language);
-        const result = await chatSession.sendMessage(elementsToReactantPromptString);
-        const parsedResult = JSON.parse(result.response.text()).possibleReactions;
+        const result = await createChatSession().sendMessage(elementsToReactantPromptString);
+        const rawText = result.response.text();
+        const cleanText = rawText.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+        const parsedResult = JSON.parse(cleanText).possibleReactions;
         if( user && parsedResult.length){
           parsedResult?.map(async(reaction) => {
             await addChemicalReaction(user.uid, [{...reaction}]);
@@ -130,9 +132,11 @@ const ChemicalReactionPage = ({ loginModalOpen, setLoginModalOpen, reaction }) =
       }
     } catch (error) {
       dispatch(setLoadingFalse());
-      dispatch(setError(errorMessageGenerator(error.status,language)));
+      const errorStatus = error?.status || error?.httpErrorCode?.status || (error?.message?.match(/\d{3}/) && Number(error.message.match(/\d{3}/)[0]));
+      dispatch(setError(errorMessageGenerator(errorStatus, language)));
     }
   }
+
   
 
   return (

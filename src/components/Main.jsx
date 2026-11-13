@@ -33,11 +33,7 @@ const Main = ( ) => {
     });
   }, [dispatch]);
 
-  useEffect(()=>{
-    if( !isAuthenticated ){
-      setLoginModalOpen(true);
-    }
-  },[isAuthenticated])
+
   const toggleDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
@@ -51,7 +47,7 @@ const Main = ( ) => {
     <>
       <LoadingModal loading={loading} />
       <CssBaseline />
-      <Box sx={{ display: 'flex', position: 'relative',backgroundColor:"#e8ecef",minHeight:'100vh' }}>
+      <Box sx={{ display: 'flex', position: 'relative', backgroundColor: 'transparent', minHeight: '100vh' }}>
         <Navbar 
           toggleDrawer={toggleDrawer} 
           language={language} 

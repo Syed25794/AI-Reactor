@@ -3,7 +3,7 @@ export const constants = {
     ActinidesSeriesFirstElementSymbol : 'Ac',
     selectedElementsLimits : 8,
     minSelectedElements : 1,
-    Gemini_Modal : "gemini-2.0-flash",
+    Gemini_Modal : "gemini-3.5-flash-lite",
     responseMimeTypeTextPlain : "text/plain",
     responseMimeTypeJSON : "application/json",
     temperatureUnit: 'Kalvin',
@@ -14,7 +14,7 @@ export const constants = {
     temperature : 0.5,
     topP : 0.95,
     topK: 64,
-    maxOutputTokens: 8192,
+    maxOutputTokens: 1024,
 
 }
 export const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -175,7 +175,7 @@ export const errorMessageGenerator = (error, language) => {
         case 500:
             return language === 'hi' ? 'गूगल की तरफ से अप्रत्याशित त्रुटि हुई!' : language === 'ur' ? 'گوگل کی طرف سے ایک غیر متوقع خرابی واقع ہوئی ہے!' : `An unexpected error occurred on Google's side!`;
         case 503:
-            return language === 'hi' ? 'सेवा अस्थायी रूप से अधिक लोड या डाउन हो सकती है!' : language === 'ur' ? 'سروس عارضی طور پر زیادہ بوجھ یا بند ہو سکتی ہے!' : `The service may be temporarily overloaded or down!`;
+            return language === 'hi' ? 'AI अभी व्यस्त है। कृपया कुछ देर बाद पुनः प्रयास करें!' : language === 'ur' ? 'AI ابھی مصروف ہے۔ براہ کرم کچھ دیر بعد دوبارہ کوشش کریں!' : 'AI is busy right now. Please try again in a few moments!';
         case 'minmaxSelectedLimit':
             return language === 'hi' ? 'अधिकतम रिएक्टेंट सीमा पार हो गई!' : language === 'ur' ? 'کم از کم یا زیادہ سے زیادہ ری ایکٹینٹ کی حد سے تجاوز ہوگیا ہے!' : 'Maximum reactant limit breached!';
         case 'maxReactantLimit':

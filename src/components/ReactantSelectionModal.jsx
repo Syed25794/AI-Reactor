@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeReactant, updateReactants } from '../context/ReactionReducer/action';
 import { getCorrectNameAndFormulaOfReactant } from '../prompts/prompts';
-import chatSession from '../gemini/config';
+import createChatSession from '../gemini/config';
 import { setError, setLoadingFalse, setLoadingTrue, setSuccess } from '../context/LoadingReducer/action';
 import { errorMessageGenerator, successMessageGenerator } from '../constant/constants';
 import ChemicalFormulaFormatter from './ChemicalFormulaFormatter';
@@ -46,8 +46,10 @@ export default function ReactantSelectionModal({ open, setOpen, Id}) {
         const payload = { ...reactantInput };
         delete payload.id;
         const getPromptForCorrectReactantValues = getCorrectNameAndFormulaOfReactant(payload, language);
-        const result = await chatSession.sendMessage(getPromptForCorrectReactantValues);
-        const parsedResult = JSON.parse(result.response.text());
+        const result = await createChatSession().sendMessage(getPromptForCorrectReactantValues);
+        const rawText = result.response.text();
+        const cleanText = rawText.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/,'').trim();
+        const parsedResult = JSON.parse(cleanText);
         dispatch(setSuccess(successMessageGenerator('reactantCreated', language)));
         dispatch(updateReactants({id: Id, ...parsedResult}));
         setReactantInput(inputInitialState);
@@ -55,11 +57,9 @@ export default function ReactantSelectionModal({ open, setOpen, Id}) {
         dispatch(setLoadingFalse());
       }
     } catch (error) {
-      dispatch(updateReactants({id: Id, ...reactantInput}));
-      setReactantInput(inputInitialState);
-      setOpen(false);
       dispatch(setLoadingFalse());
-      dispatch(setError(errorMessageGenerator(error.status,language)));
+      const errorStatus = error?.status || error?.httpErrorCode?.status || (error?.message?.match(/\d{3}/) && Number(error.message.match(/\d{3}/)[0]));
+      dispatch(setError(errorMessageGenerator(errorStatus, language)));
     }
   };
 
